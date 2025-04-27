@@ -12,6 +12,7 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
     </style>
+
     <!-- Add EmailJS library -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script>
@@ -19,6 +20,7 @@
         emailjs.init('YOUR_EMAILJS_USER_ID');
     </script>
 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 </head>
 
 <body>
@@ -26,6 +28,59 @@
         <div class="logo">
             <h1>Fashion Store</h1>
         </div>
+        <section class="auth-container" id="auth">
+            <div class="auth-box">
+                <div class="auth-options">
+                    <button class="auth-option active" onclick="showForm('login')">Login</button>
+                    <button class="auth-option" onclick="showForm('signup')">Sign Up</button>
+                </div>
+
+                <!-- Login Form -->
+                <form class="auth-form" id="loginForm">
+                    <div class="form-group">
+                        <label for="loginEmail">Email</label>
+                        <span class="icon">📧</span>
+                        <input type="email" id="loginEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPassword">Password</label>
+                        <span class="icon">🔒</span>
+                        <input type="password" id="loginPassword" required>
+                    </div>
+                    <button type="submit" class="auth-btn">Login</button>
+                    <p class="auth-switch">Don't have an account? <a href="#" onclick="showForm('signup')">Sign Up</a>
+                    </p>
+                </form>
+
+                <!-- Signup Form -->
+                <form class="auth-form hidden" id="signupForm">
+                    <div class="form-group">
+                        <label for="signupName">Full Name</label>
+                        <span class="icon">👤</span>
+                        <input type="text" id="signupName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupEmail">Email</label>
+                        <span class="icon">📧</span>
+                        <input type="email" id="signupEmail" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupPassword">Password</label>
+                        <span class="icon">🔒</span>
+                        <input type="password" id="signupPassword" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="signupConfirmPassword">Confirm Password</label>
+                        <span class="icon">🔐</span>
+                        <input type="password" id="signupConfirmPassword" required>
+                    </div>
+                    <button type="submit" class="auth-btn">Sign Up</button>
+                    <p class="auth-switch">Already have an account? <a href="#" onclick="showForm('login')">Login</a>
+                    </p>
+                </form>
+            </div>
+        </section>
+
         <nav>
             <ul>
                 <li><a href="#" class="active">Home</a></li>
@@ -33,11 +88,31 @@
                 <li><a href="#female">Female</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
+                <li><a href="#auth">Login/Signup</a></li>
             </ul>
         </nav>
         <div class="cart-icon">
             <i class="fas fa-shopping-cart"></i>
             <span class="cart-count">0</span>
+        </div>
+
+        <!-- Add this to your header -->
+        <button class="menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+
+        <div class="mobile-menu">
+            <button class="close-menu">
+                <i class="fas fa-times"></i>
+            </button>
+            <ul>
+                <li><a href="#" class="active">Home</a></li>
+                <li><a href="#male">Male</a></li>
+                <li><a href="#female">Female</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li class="auth-link"><a href="#auth" onclick="showAuth()">Login/Signup</a></li>
+            </ul>
         </div>
     </header>
 
@@ -171,6 +246,8 @@
                 </div>
             </div>
         </section>
+
+        
     </main>
 
     <div class="cart-overlay">
