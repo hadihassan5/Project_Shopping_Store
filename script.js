@@ -24,13 +24,13 @@ let cart = [];
 function addToCart(e) {
     const id = parseInt(e.target.dataset.id);
     const productElement = e.target.closest('.product');
-    
+
     const title = productElement.querySelector('.product-title').textContent;
     const price = parseFloat(productElement.querySelector('.product-price').textContent.replace('₨', '').replace(',', ''));
     const image = productElement.querySelector('.product-img').src;
-    
+
     const cartItem = cart.find(item => item.id === id);
-    
+
     if (cartItem) {
         cartItem.amount += 1;
     } else {
@@ -42,7 +42,7 @@ function addToCart(e) {
             amount: 1
         });
     }
-    
+
     updateCart();
     cartOverlay.style.display = 'flex'; // Automatically open cart
 }
@@ -51,10 +51,10 @@ function addToCart(e) {
 function updateCart() {
     const totalItems = cart.reduce((total, item) => total + item.amount, 0);
     cartCount.textContent = totalItems;
-    
+
     const totalPrice = cart.reduce((total, item) => total + (item.price * item.amount), 0);
     cartTotal.textContent = totalPrice.toLocaleString('en-PK');
-    
+
     cartContent.innerHTML = '';
     cart.forEach(item => {
         const cartItemElement = document.createElement('div');
@@ -78,15 +78,15 @@ function updateCart() {
         `;
         cartContent.appendChild(cartItemElement);
     });
-    
+
     document.querySelectorAll('.remove-item').forEach(button => {
         button.addEventListener('click', removeItem);
     });
-    
+
     document.querySelectorAll('.decrease').forEach(button => {
         button.addEventListener('click', decreaseAmount);
     });
-    
+
     document.querySelectorAll('.increase').forEach(button => {
         button.addEventListener('click', increaseAmount);
     });
@@ -103,7 +103,7 @@ function removeItem(e) {
 function decreaseAmount(e) {
     const id = parseInt(e.target.dataset.id || e.target.parentElement.dataset.id);
     const cartItem = cart.find(item => item.id === id);
-    
+
     if (cartItem.amount > 1) {
         cartItem.amount -= 1;
     } else {
@@ -136,22 +136,22 @@ function checkout() {
 // Submit order (no alerts)
 function submitOrder(e) {
     e.preventDefault();
-    
+
     const name = document.getElementById('name').value;
     const email = document.getElementById('email').value;
     const address = document.getElementById('address').value;
     const phone = document.getElementById('phone').value;
-    
+
     if (!name || !email || !address || !phone) return;
 
     const orderNumber = 'ORD-' + Math.floor(100000 + Math.random() * 900000);
-    
+
     checkoutOverlay.style.display = 'none';
     orderConfirmation.style.display = 'flex';
-    
+
     const confirmationText = document.querySelectorAll('.confirmation-content p')[0];
     confirmationText.textContent = `Thank you for your purchase. Your order #${orderNumber} has been placed successfully.`;
-    
+
     clearCart();
     checkoutForm.reset();
 }
@@ -159,7 +159,7 @@ function submitOrder(e) {
 // Payment method toggle
 function handlePaymentChange() {
     paymentOptions.forEach(option => {
-        option.addEventListener('change', function() {
+        option.addEventListener('change', function () {
             if (this.value === 'card') {
                 cardDetails.style.display = 'block';
             } else {
@@ -172,7 +172,7 @@ function handlePaymentChange() {
 // Set active navigation link
 function setActiveLink() {
     navLinks.forEach(link => {
-        link.addEventListener('click', function() {
+        link.addEventListener('click', function () {
             navLinks.forEach(l => l.classList.remove('active'));
             this.classList.add('active');
         });
@@ -216,3 +216,84 @@ function init() {
 
 // Start the application
 init();
+
+
+
+
+// LOGIN/SIGNUP
+function showAuth() {
+    document.querySelector('.auth-container').style.display = 'flex';
+    showForm('login');
+}
+
+function hideAuth() {
+    document.querySelector('.auth-container').style.display = 'none';
+}
+
+function showForm(formType) {
+    document.querySelectorAll('.auth-option').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.textContent.toLowerCase() === formType) btn.classList.add('active');
+    });
+
+    document.querySelectorAll('.auth-form').forEach(form => {
+        form.classList.add('hidden');
+    });
+
+    document.getElementById(`${formType}Form`).classList.remove('hidden');
+}
+
+// Update event listeners
+document.querySelectorAll('nav ul li a[href="#auth"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+        e.preventDefault();
+        showAuth();
+    });
+});
+
+// Close auth container when clicking outside
+document.querySelector('.auth-container').addEventListener('click', (e) => {
+    if (e.target === document.querySelector('.auth-container')) {
+        hideAuth();
+    }
+});
+
+// Form submission handlers
+document.getElementById('loginForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    // Add your login logic here
+    hideAuth();
+});
+
+document.getElementById('signupForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    // Add your signup logic here
+    hideAuth();
+});
+
+
+
+
+// Add this JavaScript MENU
+document.querySelector('.menu-toggle').addEventListener('click', () => {
+    document.querySelector('.mobile-menu').classList.add('active');
+});
+
+document.querySelector('.close-menu').addEventListener('click', () => {
+    document.querySelector('.mobile-menu').classList.remove('active');
+});
+
+// Close menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!document.querySelector('.mobile-menu').contains(e.target) &&
+        !document.querySelector('.menu-toggle').contains(e.target)) {
+        document.querySelector('.mobile-menu').classList.remove('active');
+    }
+});
+
+// Close menu when clicking links
+document.querySelectorAll('.mobile-menu a').forEach(link => {
+    link.addEventListener('click', () => {
+        document.querySelector('.mobile-menu').classList.remove('active');
+    });
+});
