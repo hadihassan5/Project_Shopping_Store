@@ -98,6 +98,260 @@ nav ul li a:hover {
     font-size: 0.8rem;
 }
 
+.auth-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-box {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.auth-options {
+    display: flex;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--medium-gray);
+}
+
+.auth-option {
+    flex: 1;
+    padding: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--dark-gray);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.auth-option.active {
+    color: var(--primary-color);
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.auth-btn {
+    background: var(--primary-color);
+    color: white;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.auth-btn:hover {
+    background: var(--primary-dark);
+}
+
+.auth-switch {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.auth-switch a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-switch a:hover {
+    text-decoration: underline;
+}
+
+.hidden {
+    display: none;
+}
+
+
+.auth-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    overflow-y: auto;
+    /* Add scroll for overflow */
+}
+
+.auth-box {
+    background: white;
+    padding: 2rem;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 400px;
+    max-height: 90vh;
+    /* Prevent overflow */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    overflow-y: auto;
+    /* Add scroll if content overflows */
+}
+
+.form-group {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-group .icon {
+    position: absolute;
+    left: 5px;
+    top: 69%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem 0.8rem 0.8rem 30px;
+    /* Add space for icon */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+/* Fix duplicate ID in signup form */
+#signupConfirmPassword {
+    margin-top: 1rem;
+}
+
+
+
+/* Add these styles to your CSS FOR MENU */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: var(--dark-gray);
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 250px;
+    height: 100vh;
+    background: white;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease-in-out;
+    z-index: 1001;
+    padding: 1rem;
+}
+
+.mobile-menu.active {
+    right: 0;
+}
+
+.mobile-menu ul {
+    flex-direction: column;
+    margin-top: 2rem;
+    left: 10px;
+}
+
+.mobile-menu ul li {
+    list-style: none;
+    margin: 1rem 0;
+}
+
+@media (max-width: 768px) {
+    nav {
+        display: none;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .mobile-menu {
+        display: block;
+    }
+
+    /* Hide desktop login/signup link */
+    nav ul li:last-child {
+        display: none;
+    }
+
+    /* Show mobile login/signup */
+    .mobile-menu .auth-link {
+        display: block;
+    }
+}
+
+html,
+body {
+    overflow-x: hidden;
+}
+
+.mobile-menu {
+    width: 80%;
+    max-width: 300px;
+}
+
+@media (max-width: 480px) {
+    .mobile-menu {
+        width: 100%;
+        max-width: none;
+        right: -100%;
+    }
+
+    .auth-box {
+        width: 95%;
+        padding: 1rem;
+    }
+}
+
+/* Add to existing media query */
+@media (max-width: 768px) {
+    body {
+        position: relative;
+    }
+
+    .mobile-menu.active {
+        right: 0;
+        box-shadow: none;
+    }
+
+    .product {
+        width: 100%;
+        margin: 0 0 1rem 0;
+    }
+}
+
 /* Hero Section */
 .hero {
     height: 80vh;
