@@ -369,6 +369,28 @@
     </footer>
 
     <script src="script.js"></script>
+    <!-- Add this script at the end of your body tag before </body> -->
+<script>
+    // Add emoji visibility control
+    document.querySelectorAll('.form-group input').forEach(input => {
+        const icon = input.previousElementSibling;
+        
+        // Handle initial state
+        if (input.value) icon.style.display = 'none';
+        
+        input.addEventListener('focus', () => {
+            icon.style.display = 'none';
+        });
+        
+        input.addEventListener('blur', () => {
+            if (!input.value) icon.style.display = 'block';
+        });
+        
+        input.addEventListener('input', () => {
+            icon.style.display = input.value ? 'none' : 'block';
+        });
+    });
+    </script>
 </body>
 
 </html>
