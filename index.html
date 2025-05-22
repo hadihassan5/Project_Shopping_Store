@@ -88,8 +88,10 @@
                 <li><a href="#female">Female</a></li>
                 <!-- <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li> -->
-                <li><a href="#auth" id="login-link" onclick="showForm('login')">Login</a></li>
-                <li><a href="#auth" id="signup-link" onclick="showForm('signup')">Sign Up</a></li>
+                <!-- ...existing code... -->
+                <li><a href="#auth" id="login-link" onclick="showAuth('login'); return false;">Login</a></li>
+                <li><a href="#auth" id="signup-link" onclick="showAuth('signup'); return false;">Sign Up</a></li>
+                <!-- ...existing code... -->
 
                 <li id="user-info" style="display:none; margin-left:auto; position:relative; cursor:pointer;">
                     <!-- Account info will be set by JS -->
@@ -410,14 +412,17 @@
     <!-- FOR Login And signUp Account & Show in NavBar -->
     <script>
         // Helper: Show user info in navbar
+        // ...existing code...
         function showUserInfo(nameOrEmail) {
             const userInfo = document.getElementById('user-info');
             userInfo.innerHTML = `👤 ${nameOrEmail} <i class="fas fa-caret-down" style="margin-left:4px;"></i>
-            <div id="user-dropdown" style="display:none; position:absolute; right:0; background:#fff; border:1px solid #ccc; min-width:120px; z-index:1000;">
-                <a href="#" id="logout-btn" style="display:block; padding:8px 16px; color:#333; text-decoration:none;">Logout</a>
-            </div>`;
+    <div id="user-dropdown" style="display:none; position:absolute; right:0; background:#fff; border:1px solid #ccc; min-width:120px; z-index:1000;">
+        <a href="#" id="logout-btn" style="display:block; padding:8px 16px; color:#333; text-decoration:none;">Logout</a>
+    </div>`;
             userInfo.style.display = 'block';
-            document.querySelector('a[href="#auth"]').style.display = 'none';
+            // Hide both Login and Sign Up links
+            document.getElementById('login-link').style.display = 'none';
+            document.getElementById('signup-link').style.display = 'none';
 
             // Toggle dropdown on click
             userInfo.onclick = function (e) {
@@ -439,12 +444,15 @@
                     logoutBtn.onclick = function (e) {
                         e.preventDefault();
                         userInfo.style.display = 'none';
-                        document.querySelector('a[href="#auth"]').style.display = 'inline-block';
+                        // Show both Login and Sign Up links again
+                        document.getElementById('login-link').style.display = 'inline-block';
+                        document.getElementById('signup-link').style.display = 'inline-block';
                         document.getElementById('auth').style.display = 'block';
                     };
                 }
             }, 100);
         }
+        // ...existing code...
 
         // Example: Handle login form submit
         document.getElementById('loginForm').addEventListener('submit', function (e) {
@@ -471,6 +479,30 @@
             document.getElementById('male').scrollIntoView({ behavior: 'smooth' });
         });
 
+
+
+
+        // Login And SignUp Active
+        function showAuth(formType = 'login') {
+            document.querySelector('.auth-container').style.display = 'flex';
+            showForm(formType);
+        }
+
+        function showForm(formType) {
+            document.querySelectorAll('.auth-option').forEach(btn => {
+                btn.classList.remove('active');
+                // Make sure textContent matches exactly: 'login' or 'sign up'
+                if (btn.textContent.replace(/\s/g, '').toLowerCase() === formType.replace(/\s/g, '').toLowerCase()) {
+                    btn.classList.add('active');
+                }
+            });
+
+            document.querySelectorAll('.auth-form').forEach(form => {
+                form.classList.add('hidden');
+            });
+
+            document.getElementById(`${formType}Form`).classList.remove('hidden');
+        }
     </script>
 </body>
 
