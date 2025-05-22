@@ -86,9 +86,19 @@
                 <li><a href="#" class="active">Home</a></li>
                 <li><a href="#male">Male</a></li>
                 <li><a href="#female">Female</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-                <li><a href="#auth">Login/Signup</a></li>
+                <!-- <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li> -->
+                <li><a href="#auth" id="login-link" onclick="showForm('login')">Login</a></li>
+                <li><a href="#auth" id="signup-link" onclick="showForm('signup')">Sign Up</a></li>
+
+                <li id="user-info" style="display:none; margin-left:auto; position:relative; cursor:pointer;">
+                    <!-- Account info will be set by JS -->
+                    <div id="user-dropdown"
+                        style="display:none; position:absolute; right:0; background:#fff; border:1px solid #ccc; min-width:120px; z-index:1000;">
+                        <a href="#" id="logout-btn"
+                            style="display:block; padding:8px 16px; color:#333; text-decoration:none;">Logout</a>
+                    </div>
+                </li>
             </ul>
         </nav>
         <div class="cart-icon">
@@ -111,7 +121,7 @@
                 <li><a href="#female">Female</a></li>
                 <li><a href="#about">About</a></li>
                 <li><a href="#contact">Contact</a></li>
-                <li class="auth-link"><a href="#auth" onclick="showAuth()">Login/Signup</a></li>
+                <li class="auth-link"><a href="#auth" onclick="showAuth()">Login / Signup</a></li>
             </ul>
         </div>
     </header>
@@ -121,7 +131,7 @@
             <div class="hero-content">
                 <h2>New Collection 2025</h2>
                 <p>Discover the latest trends in fashion</p>
-                <button class="shop-now">Shop Now</button>
+                <button class="shop-now" id="shopNowBtn">Shop Now</button>
             </div>
         </section>
 
@@ -247,7 +257,7 @@
             </div>
         </section>
 
-        
+
     </main>
 
     <div class="cart-overlay">
@@ -369,27 +379,98 @@
     </footer>
 
     <script src="script.js"></script>
+
+
     <!-- Add this script at the end of your body tag before </body> -->
-<script>
-    // Add emoji visibility control
-    document.querySelectorAll('.form-group input').forEach(input => {
-        const icon = input.previousElementSibling;
-        
-        // Handle initial state
-        if (input.value) icon.style.display = 'none';
-        
-        input.addEventListener('focus', () => {
-            icon.style.display = 'none';
+    <script>
+        // Add emoji visibility control
+        document.querySelectorAll('.form-group input').forEach(input => {
+            const icon = input.previousElementSibling;
+
+            // Handle initial state
+            if (input.value) icon.style.display = 'none';
+
+            input.addEventListener('focus', () => {
+                icon.style.display = 'none';
+            });
+
+            input.addEventListener('blur', () => {
+                if (!input.value) icon.style.display = 'block';
+            });
+
+            input.addEventListener('input', () => {
+                icon.style.display = input.value ? 'none' : 'block';
+            });
         });
-        
-        input.addEventListener('blur', () => {
-            if (!input.value) icon.style.display = 'block';
+    </script>
+
+
+
+
+    <!-- FOR Login And signUp Account & Show in NavBar -->
+    <script>
+        // Helper: Show user info in navbar
+        function showUserInfo(nameOrEmail) {
+            const userInfo = document.getElementById('user-info');
+            userInfo.innerHTML = `👤 ${nameOrEmail} <i class="fas fa-caret-down" style="margin-left:4px;"></i>
+            <div id="user-dropdown" style="display:none; position:absolute; right:0; background:#fff; border:1px solid #ccc; min-width:120px; z-index:1000;">
+                <a href="#" id="logout-btn" style="display:block; padding:8px 16px; color:#333; text-decoration:none;">Logout</a>
+            </div>`;
+            userInfo.style.display = 'block';
+            document.querySelector('a[href="#auth"]').style.display = 'none';
+
+            // Toggle dropdown on click
+            userInfo.onclick = function (e) {
+                e.stopPropagation();
+                const dropdown = userInfo.querySelector('#user-dropdown');
+                dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+            };
+
+            // Hide dropdown when clicking outside
+            document.addEventListener('click', function hideDropdown(e) {
+                const dropdown = userInfo.querySelector('#user-dropdown');
+                if (dropdown) dropdown.style.display = 'none';
+            });
+
+            // Logout functionality
+            setTimeout(() => {
+                const logoutBtn = document.getElementById('logout-btn');
+                if (logoutBtn) {
+                    logoutBtn.onclick = function (e) {
+                        e.preventDefault();
+                        userInfo.style.display = 'none';
+                        document.querySelector('a[href="#auth"]').style.display = 'inline-block';
+                        document.getElementById('auth').style.display = 'block';
+                    };
+                }
+            }, 100);
+        }
+
+        // Example: Handle login form submit
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            // ...your login logic...
+            showUserInfo(email);
+            document.getElementById('auth').style.display = 'none';
         });
-        
-        input.addEventListener('input', () => {
-            icon.style.display = input.value ? 'none' : 'block';
+
+        // Example: Handle signup form submit
+        document.getElementById('signupForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            const name = document.getElementById('signupName').value;
+            // ...your signup logic...
+            showUserInfo(name);
+            document.getElementById('auth').style.display = 'none';
         });
-    });
+
+
+        // SHOP NOW BUTTON
+        document.getElementById('shopNowBtn').addEventListener('click', function () {
+            // Scroll to the Male section (change to 'female' if you want)
+            document.getElementById('male').scrollIntoView({ behavior: 'smooth' });
+        });
+
     </script>
 </body>
 
